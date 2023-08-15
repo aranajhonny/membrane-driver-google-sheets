@@ -1,0 +1,326 @@
+{
+  "schema": {
+    "types": [
+      {
+        "name": "Root",
+        "actions": [
+          {
+            "name": "configure",
+            "type": "Void",
+            "params": [
+              {
+                "name": "clientId",
+                "type": "String"
+              },
+              {
+                "name": "clientSecret",
+                "type": "String"
+              },
+              {
+                "name": "token",
+                "type": "String",
+                "optional": true
+              }
+            ]
+          }
+        ],
+        "fields": [
+          {
+            "name": "spreadsheets",
+            "type": "SpreadsheetCollection"
+          }
+        ]
+      },
+      {
+        "name": "SpreadsheetCollection",
+        "fields": [
+          {
+            "name": "one",
+            "type": "Spreadsheet",
+            "params": [
+              {
+                "name": "id",
+                "type": "String"
+              }
+            ]
+          },
+          {
+            "name": "page",
+            "type": "SpreadsheetPage",
+            "params": [
+              {
+                "name": "q",
+                "description": "Optional. A query string for searching for documents.",
+                "type": "String",
+                "optional": true
+              },
+              {
+                "name": "privateExtendedProperty",
+                "type": "String",
+                "optional": true
+              },
+              {
+                "name": "corpora",
+                "description": "Optional. The list of corpora to search. The default is 'user'.",
+                "type": "String",
+                "optional": true
+              },
+              {
+                "name": "teamDriveId",
+                "type": "String",
+                "optional": true
+              },
+              {
+                "name": "driveId",
+                "description": "Optional. The ID of the shared drive to search.",
+                "type": "String",
+                "optional": true
+              },
+              {
+                "name": "orderBy",
+                "description": "Optional. The order in which to sort the results. The default is 'modifiedTime desc'.",
+                "type": "String",
+                "optional": true
+              },
+              {
+                "name": "spaces",
+                "description": "Optional. The list of spaces to search. The default is 'drive'.",
+                "type": "String",
+                "optional": true
+              },
+              {
+                "name": "pageSize",
+                "type": "Int",
+                "description": "Optional. The maximum number of documents to return. The default is 100. The maximum is 1000.",
+                "optional": true
+              },
+              {
+                "name": "pageToken",
+                "type": "String",
+                "description": "Optional. The page token as returned by the previous call to this method.",
+                "optional": true
+              },
+              {
+                "name": "supportsAllDrives",
+                "type": "Boolean",
+                "optional": true
+              },
+              {
+                "name": "supportsTeamDrives",
+                "type": "Boolean",
+                "optional": true
+              },
+              {
+                "name": "includeItemsFromAllDrives",
+                "type": "Boolean",
+                "optional": true
+              },
+              {
+                "name": "includeLabels",
+                "type": "String",
+                "optional": true
+              },
+              {
+                "name": "includePermissionsForView",
+                "type": "String",
+                "optional": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "SpreadsheetPage",
+        "fields": [
+          {
+            "name": "items",
+            "type": "List",
+            "ofType": "Spreadsheet"
+          },
+          {
+            "name": "next",
+            "type": "Ref",
+            "ofType": "SpreadsheetPage"
+          }
+        ],
+        "actions": [],
+        "events": []
+      },
+      {
+        "name": "Spreadsheet",
+        "fields": [
+          {
+            "name": "id",
+            "type": "String"
+          },
+          {
+            "name": "name",
+            "type": "String",
+            "hints": {
+              "primary": true
+            }
+          },
+          {
+            "name": "spreadsheetUrl",
+            "type": "String"
+          },
+          {
+            "name": "sheets",
+            "type": "SheetCollection"
+          }
+        ]
+      },
+      {
+        "name": "SheetCollection",
+        "fields": [
+          {
+            "name": "items",
+            "type": "List",
+            "ofType": "Sheet"
+          },
+          {
+            "name": "one",
+            "type": "Sheet",
+            "params": [
+              {
+                "name": "sheetId",
+                "type": "Int"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Sheet",
+        "fields": [
+          {
+            "name": "sheetId",
+            "type": "Int"
+          },
+          {
+            "name": "title",
+            "type": "String",
+            "hints": {
+              "primary": true
+            }
+          },
+          {
+            "name": "index",
+            "type": "Int"
+          },
+          {
+            "name": "sheetType",
+            "type": "String"
+          },
+          {
+            "name": "gridProperties",
+            "type": "GridProperties"
+          },
+          {
+            "name": "dataCsv",
+            "type": "String",
+            "params": [
+              {
+                "name": "range",
+                "type": "String",
+                "optional": true
+              }
+            ]
+          },
+          {
+            "name": "data",
+            "type": "Json",
+            "params": [
+              {
+                "name": "range",
+                "type": "String"
+              }
+            ]
+          }
+        ],
+        "actions": [
+          {
+            "name": "clear",
+            "type": "Void",
+            "params": [
+              {
+                "name": "range",
+                "type": "String",
+                "optional": true
+              }
+            ]
+          },
+          {
+            "name": "append",
+            "type": "Void",
+            "params": [
+              {
+                "name": "values",
+                "type": "Json",
+                "optional": true
+              },
+              {
+                "name": "range",
+                "type": "String",
+                "optional": true
+              },
+              {
+                "name": "csv",
+                "type": "String",
+                "optional": true
+              }
+            ]
+          },
+          {
+            "name": "update",
+            "type": "Void",
+            "params": [
+              {
+                "name": "values",
+                "type": "Json",
+                "optional": true
+              },
+              {
+                "name": "range",
+                "type": "String",
+                "optional": false
+              },
+              {
+                "name": "csv",
+                "type": "String",
+                "optional": true
+              }
+            ]
+          },
+          {
+            "name": "copyTo",
+            "type": "Void",
+            "params": [
+              {
+                "name": "spreadsheetId",
+                "type": "String"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "GridProperties",
+        "fields": [
+          {
+            "name": "rowCount",
+            "type": "Int"
+          },
+          {
+            "name": "columnCount",
+            "type": "Int"
+          }
+        ]
+      }
+    ]
+  },
+  "dependencies": {
+    "http": "http:",
+    "endpoint": "sys-process:endpointUrl"
+  }
+}
