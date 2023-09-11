@@ -3,7 +3,7 @@ import { ensureClient, api, html } from "./utils";
 
 export const Root = {
   spreadsheets: () => ({}),
-  configure: async ({ args: { clientId, clientSecret, token } }) => {
+  configure: async ({ clientId, clientSecret, token }) => {
     state.endpointUrl = await nodes.endpoint.$get();
     state.clientId = clientId;
     state.clientSecret = clientSecret;
@@ -19,7 +19,7 @@ export const Root = {
 };
 
 export const SpreadsheetCollection = {
-  one: async ({ args: { id } }) => {
+  one: async ({ id }) => {
     const res = await api(
       "GET",
       "sheets.googleapis.com",
@@ -28,7 +28,7 @@ export const SpreadsheetCollection = {
     const json = await res.json();
     return json;
   },
-  async page({ self, args }) {
+  async page(args, { self }) {
     const { q: query, ...rest } = args;
     const mimeType = "application/vnd.google-apps.spreadsheet";
     const queryStr = query ? `and ${query}` : "";
@@ -46,30 +46,30 @@ export const SpreadsheetCollection = {
 };
 
 export const Spreadsheet = {
-  gref: ({ obj }) => {
+  gref: (_, { obj }) => {
     return root.spreadsheets.one({ id: obj!.id });
   },
-  id: ({ obj }) => obj!.spreadsheetId ?? obj!.id,
-  name: ({ obj }) => obj!.name ?? obj.properties.title,
+  id: (_, { obj }) => obj!.spreadsheetId ?? obj!.id,
+  name: (_, { obj }) => obj!.name ?? obj.properties.title,
 };
 
 export const SheetCollection = {
-  one: async ({ obj, args: { sheetId } }) => {
+  one: async ({ sheetId }, { obj }) => {
     return obj
       .map((sheet) => sheet.properties)
       .find((sheet) => sheet.sheetId === sheetId);
   },
-  items: ({ obj }) => obj.map((sheet) => sheet.properties),
+  items: (_, { obj }) => obj.map((sheet) => sheet.properties),
 };
 
 export const Sheet = {
-  gref: ({ obj, self }) => {
+  gref: (_, { obj, self }) => {
     const { id } = self.$argsAt(root.spreadsheets.one);
     const sheetId = obj.sheetId;
 
     return root.spreadsheets.one({ id }).sheets.one({ sheetId });
   },
-  copyTo: async ({ obj, self, args: { spreadsheetId } }) => {
+  copyTo: async ({ spreadsheetId }, { obj, self }) => {
     const { id } = self.$argsAt(root.spreadsheets.one);
     const sheetId = obj!.properties.sheetId;
 
@@ -83,7 +83,7 @@ export const Sheet = {
       })
     );
   },
-  data: async ({ obj, self, args: { range } }) => {
+  data: async ({ range }, { obj, self }) => {
     const { id } = self.$argsAt(root.spreadsheets.one);
     const title = formatSheetName(obj.title);
     const cells = range || "A1:Z1000";
@@ -95,7 +95,7 @@ export const Sheet = {
     const data = await res.json();
     return data.values ? data.values : [];
   },
-  dataCsv: async ({ obj, self, args: { range } }) => {
+  dataCsv: async ({ range }, { obj, self }) => {
     const { id } = self.$argsAt(root.spreadsheets.one);
     const title = formatSheetName(obj.title);
     const cells = range || "A1:Z1000";
@@ -109,7 +109,7 @@ export const Sheet = {
       ? data.values.map((row: string[]) => row.join(",")).join("\n")
       : "";
   },
-  update: async ({ self, args: { values, csv, range } }) => {
+  update: async ({ values, csv, range }, { self }) => {
     const { id } = self.$argsAt(root.spreadsheets.one);
     const { sheetId } = self.$argsAt(root.spreadsheets.one.sheets.one);
 
@@ -138,7 +138,7 @@ export const Sheet = {
       })
     );
   },
-  append: async ({ self, args: { values, csv, range } }) => {
+  append: async ({ values, csv, range }, { self }) => {
     const { id } = self.$argsAt(root.spreadsheets.one);
     const { sheetId } = self.$argsAt(root.spreadsheets.one.sheets.one);
     const cells = range || "A1:Z1000";
@@ -168,7 +168,7 @@ export const Sheet = {
       })
     );
   },
-  clear: async ({ self, args: { range } }) => {
+  clear: async ({ range }, { self }) => {
     const { id } = self.$argsAt(root.spreadsheets.one);
     const { sheetId } = self.$argsAt(root.spreadsheets.one.sheets.one);
     const cells = range || "A1:Z1000";
@@ -186,7 +186,7 @@ export const Sheet = {
   },
 };
 
-export async function endpoint({ args: { path, query, headers, body } }) {
+export async function endpoint({ path, query, headers, body }) {
   switch (path) {
     case "/": {
       return html(`<a href="/auth">Authenticate with Google</a>`);
