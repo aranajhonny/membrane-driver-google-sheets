@@ -170,8 +170,7 @@ export async function createAuthClient() {
         authorizationUri: "https://accounts.google.com/o/oauth2/v2/auth",
         redirectUri: `${await endpointUrl()}/auth/callback`,
         scopes: [
-          "https://www.googleapis.com/auth/drive",
-          "https://www.googleapis.com/auth/spreadsheets",
+          "https://www.googleapis.com/auth/drive"
         ],
       },
       oauthRequest
