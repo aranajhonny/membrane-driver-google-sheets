@@ -1,20 +1,25 @@
 import { nodes, state, root } from "membrane";
-import { ensureClient, api, html } from "./utils";
+import * as util from "./utils";
+import { api, createAuthClient } from "./utils";
 
 export const Root = {
+  authId() {
+    return "google-sheets";
+  },
+  async status() {
+    return await util.authStatus();
+  },
+  checkStatus: async () => {
+    const res = await api("GET", "www.googleapis.com", `drive/v3/files`, {
+      pageSize: 1,
+    });
+    return res.status === 200;
+  },
   spreadsheets: () => ({}),
-  configure: async ({ clientId, clientSecret, token }) => {
-    state.endpointUrl = await nodes.endpoint.$get();
+  configure: async ({ clientId, clientSecret }) => {
     state.clientId = clientId;
     state.clientSecret = clientSecret;
-    // Token is optional, but it's convenient while working on this driver (and perhaps constantly killing it) to avoid
-    // having to auth with Google over and over
-    if (token) {
-      // If restoring a token, assume it's expired so it gets refreshed right away
-      const data = { ...JSON.parse(token), expires_in: 0 };
-      state.accessToken = state.auth.createToken(null, null, null, data);
-    }
-    ensureClient();
+    await createAuthClient();
   },
 };
 
@@ -187,30 +192,17 @@ export const Sheet = {
 };
 
 export async function endpoint({ path, query, headers, body }) {
+  const link = await nodes.http
+    .authenticated({ api: "google-sheets", authId: root.authId })
+    .createLink();
   switch (path) {
-    case "/": {
-      return html(`<a href="/auth">Authenticate with Google</a>`);
-    }
+    case "/":
     case "/auth":
-    case "/auth/": {
-      ensureClient();
-      const url = state.auth.code.getUri({
-        query: { access_type: "offline", prompt: "consent" }, // Request refresh token
-        // TODO: state
-      });
-      return JSON.stringify({ status: 303, headers: { location: url } });
-    }
-    case "/auth/callback": {
-      state.accessToken = await state.auth.code.getToken(`${path}?${query}`);
-      if (state.accessToken?.accessToken) {
-        return html(`Driver configured!`);
-      }
-      return html(
-        `There was an issue acquiring the access token. Check the logs.`
-      );
-    }
+    case "/auth/":
+    case "/auth/callback":
+      return util.endpoint({ path, query, headers, body });
     default:
-      console.log("Unknown Endpoint:", path);
+      return JSON.stringify({ status: 404, body: "Not found" });
   }
 }
 

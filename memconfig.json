@@ -22,12 +22,24 @@
                 "optional": true
               }
             ]
+          },
+          {
+            "name": "checkStatus",
+            "type": "Boolean"
           }
         ],
         "fields": [
           {
             "name": "spreadsheets",
             "type": "SpreadsheetCollection"
+          },
+          {
+            "name": "authId",
+            "type": "String"
+          },
+          {
+            "name": "status",
+            "type": "String"
           }
         ]
       },
