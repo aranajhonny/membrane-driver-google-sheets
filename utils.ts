@@ -131,7 +131,7 @@ function html(body: string) {
 function indexHtml(membraneAuthUrl: string, customAuthUrl: string) {
   return html(`
   <div style="display: flex; flex-direction: row; justify-content: space-around; align-items: center; margin-bottom: 18px;">
-    <img style="width: 40px; height: 40px; margin-right: 10px;" src="https://lh3.googleusercontent.com/1DECuhPQ1y2ppuL6tdEqNSuObIm_PW64w0mNhm3KGafi40acOJkc4nvsZnThoDKTH8gWyxAnipJmvCiszX8R6UAUu1UyXPfF13d7"/>
+    <img style="width: 40px; height: 40px; margin-right: 10px;" src="https://lh3.googleusercontent.com/yCF7mTvXRF_EhDf7Kun5_-LMYTbD2IL-stx_D97EzpACfhpGjY_Frx8NZw63rSn2dME0v8-Im49Mh16htvPAGmEOMhiTxDZzo6rB7MY"/>
     <h1>Google Sheets Driver for Membrane</h1>
   </div>
   <div style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;">
