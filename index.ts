@@ -206,7 +206,7 @@ export async function endpoint({ path, query, headers, body }) {
   }
 }
 
-// Util for formatting sheet names to A1 notation
+// Formatting sheet names to A1 notation
 function formatSheetName(sheetName: any): string {
   if (/[\s\W]/.test(sheetName) || !/^[a-zA-Z0-9]+$/.test(sheetName)) {
     return `'${sheetName}'`;
