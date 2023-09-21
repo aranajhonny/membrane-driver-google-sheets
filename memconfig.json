@@ -40,6 +40,10 @@
           {
             "name": "status",
             "type": "String"
+          },
+          {
+            "name": "tests",
+            "type": "Tests"
           }
         ]
       },
@@ -326,6 +330,15 @@
           {
             "name": "columnCount",
             "type": "Int"
+          }
+        ]
+      },
+      {
+        "name": "Tests",
+        "actions": [
+          {
+            "name": "testGetSpreadsheets",
+            "type": "Boolean"
           }
         ]
       }

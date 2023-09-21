@@ -21,6 +21,15 @@ export const Root = {
     state.clientSecret = clientSecret;
     await createAuthClient();
   },
+  tests: () => ({}),
+};
+
+export const Tests = {
+  testGetSpreadsheets: async () => {
+    const res = await root.spreadsheets.page.items.$query(`{ id }`);
+
+    return Array.isArray(res);
+  },
 };
 
 export const SpreadsheetCollection = {
