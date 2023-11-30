@@ -21,29 +21,35 @@
                 "type": "String",
                 "optional": true
               }
-            ]
+            ],
+            "description": "Configures the Google Sheets API client with the provided credentials."
           },
           {
             "name": "checkStatus",
-            "type": "Boolean"
+            "type": "Boolean",
+            "description": "Checks the status of the Google Sheets API client configuration."
           }
         ],
         "fields": [
           {
             "name": "spreadsheets",
-            "type": "SpreadsheetCollection"
+            "type": "SpreadsheetCollection",
+            "description": "A collection of spreadsheets accessible by the API client."
           },
           {
             "name": "authId",
-            "type": "String"
+            "type": "String",
+            "description": "The authentication identifier for the API client."
           },
           {
             "name": "status",
-            "type": "String"
+            "type": "String",
+            "description": "The current status of the API client configuration."
           },
           {
             "name": "tests",
-            "type": "Tests"
+            "type": "Tests",
+            "description": "A set of tests to validate the functionality of the API client."
           }
         ]
       },
@@ -264,7 +270,8 @@
                 "type": "String",
                 "optional": true
               }
-            ]
+            ],
+            "description": "Clears the content of cells in the specified range."
           },
           {
             "name": "append",
@@ -285,7 +292,8 @@
                 "type": "String",
                 "optional": true
               }
-            ]
+            ],
+            "description": "Appends values to the sheet, optionally within a specified range."
           },
           {
             "name": "update",
@@ -306,7 +314,8 @@
                 "type": "String",
                 "optional": true
               }
-            ]
+            ],
+            "description": "Updates the sheet with the provided values within the specified range."
           },
           {
             "name": "copyTo",
@@ -316,7 +325,8 @@
                 "name": "spreadsheetId",
                 "type": "String"
               }
-            ]
+            ],
+            "description": "Copies the current sheet to another spreadsheet with the given ID."
           }
         ]
       },
@@ -338,7 +348,8 @@
         "actions": [
           {
             "name": "testGetSpreadsheets",
-            "type": "Boolean"
+            "type": "Boolean",
+            "description": "Tests the retrieval of spreadsheets to ensure the API client is functioning correctly."
           }
         ]
       }
