@@ -34,7 +34,7 @@
           {
             "name": "spreadsheets",
             "type": "SpreadsheetCollection",
-            "description": "A collection of spreadsheets accessible by the API client."
+            "description": "Collection of spreadsheets accessible by the API client."
           },
           {
             "name": "authId",
@@ -51,7 +51,8 @@
             "type": "Tests",
             "description": "A set of tests to validate the functionality of the API client."
           }
-        ]
+        ],
+        "description": "Google Sheets Driver"
       },
       {
         "name": "SpreadsheetCollection",
@@ -62,9 +63,11 @@
             "params": [
               {
                 "name": "id",
-                "type": "String"
+                "type": "String",
+                "description": "The ID of the Google Sheets spreadsheet"
               }
-            ]
+            ],
+            "description": "Represents a single Google Sheets spreadsheet"
           },
           {
             "name": "page",
@@ -79,7 +82,8 @@
               {
                 "name": "privateExtendedProperty",
                 "type": "String",
-                "optional": true
+                "optional": true,
+                "description": "The private extended property"
               },
               {
                 "name": "corpora",
@@ -90,7 +94,8 @@
               {
                 "name": "teamDriveId",
                 "type": "String",
-                "optional": true
+                "optional": true,
+                "description": "The ID of the team drive"
               },
               {
                 "name": "driveId",
@@ -125,31 +130,38 @@
               {
                 "name": "supportsAllDrives",
                 "type": "Boolean",
-                "optional": true
+                "optional": true,
+                "description": "Boolean value to indicate whether the request supports all drives."
               },
               {
                 "name": "supportsTeamDrives",
                 "type": "Boolean",
-                "optional": true
+                "optional": true,
+                "description": "Boolean value to indicate whether the request supports team drives."
               },
               {
                 "name": "includeItemsFromAllDrives",
                 "type": "Boolean",
-                "optional": true
+                "optional": true,
+                "description": "Boolean value to indicate whether the request includes items from all drives."
               },
               {
                 "name": "includeLabels",
                 "type": "String",
-                "optional": true
+                "optional": true,
+                "description": "The labels to include in the results."
               },
               {
                 "name": "includePermissionsForView",
                 "type": "String",
-                "optional": true
+                "optional": true,
+                "description": "The permissions to include in the results."
               }
-            ]
+            ],
+            "description": "Represents a page of Google Sheets spreadsheets"
           }
-        ]
+        ],
+        "description": "Collection of Google Sheets spreadsheets"
       },
       {
         "name": "SpreadsheetPage",
@@ -157,40 +169,48 @@
           {
             "name": "items",
             "type": "List",
-            "ofType": "Spreadsheet"
+            "ofType": "Spreadsheet",
+            "description": "List of spreadsheets in the page."
           },
           {
             "name": "next",
             "type": "Ref",
-            "ofType": "SpreadsheetPage"
+            "ofType": "SpreadsheetPage",
+            "description": "Reference to the next page in the spreadsheet."
           }
         ],
         "actions": [],
-        "events": []
+        "events": [],
+        "description": "Type representing a page in a Google Sheets spreadsheet."
       },
       {
         "name": "Spreadsheet",
         "fields": [
           {
             "name": "id",
-            "type": "String"
+            "type": "String",
+            "description": "ID of the Google Sheets spreadsheet."
           },
           {
             "name": "name",
             "type": "String",
             "hints": {
               "primary": true
-            }
+            },
+            "description": "Name of the Google Sheets spreadsheet."
           },
           {
             "name": "spreadsheetUrl",
-            "type": "String"
+            "type": "String",
+            "description": "URL of the Google Sheets spreadsheet."
           },
           {
             "name": "sheets",
-            "type": "SheetCollection"
+            "type": "SheetCollection",
+            "description": "Collection of sheets within the Google Sheets spreadsheet."
           }
-        ]
+        ],
+        "description": "Root type for interacting with Google Sheets spreadsheets."
       },
       {
         "name": "SheetCollection",
@@ -198,7 +218,8 @@
           {
             "name": "items",
             "type": "List",
-            "ofType": "Sheet"
+            "ofType": "Sheet",
+            "description": "Collection of Google Sheets"
           },
           {
             "name": "one",
@@ -208,35 +229,42 @@
                 "name": "sheetId",
                 "type": "Int"
               }
-            ]
+            ],
+            "description": "Single Google Sheet"
           }
-        ]
+        ],
+        "description": "Collection of Google Sheets"
       },
       {
         "name": "Sheet",
         "fields": [
           {
             "name": "sheetId",
-            "type": "Int"
+            "type": "Int",
+            "description": "The unique identifier of the sheet."
           },
           {
             "name": "title",
             "type": "String",
             "hints": {
               "primary": true
-            }
+            },
+            "description": "The title of the sheet."
           },
           {
             "name": "index",
-            "type": "Int"
+            "type": "Int",
+            "description": "The index of the sheet."
           },
           {
             "name": "sheetType",
-            "type": "String"
+            "type": "String",
+            "description": "The type of the sheet."
           },
           {
             "name": "gridProperties",
-            "type": "GridProperties"
+            "type": "GridProperties",
+            "description": "The properties of the grid in the sheet."
           },
           {
             "name": "dataCsv",
@@ -247,7 +275,8 @@
                 "type": "String",
                 "optional": true
               }
-            ]
+            ],
+            "description": "The data in CSV format from the sheet, optionally within a specified range."
           },
           {
             "name": "data",
@@ -257,7 +286,8 @@
                 "name": "range",
                 "type": "String"
               }
-            ]
+            ],
+            "description": "The data in JSON format from the sheet, within the specified range."
           }
         ],
         "actions": [
@@ -328,20 +358,24 @@
             ],
             "description": "Copies the current sheet to another spreadsheet with the given ID."
           }
-        ]
+        ],
+        "description": "Type representing a sheet in Google Sheets."
       },
       {
         "name": "GridProperties",
         "fields": [
           {
             "name": "rowCount",
-            "type": "Int"
+            "type": "Int",
+            "description": "The number of rows in the grid"
           },
           {
             "name": "columnCount",
-            "type": "Int"
+            "type": "Int",
+            "description": "The number of columns in the grid"
           }
-        ]
+        ],
+        "description": "Type representing the properties of a grid in Google Sheets"
       },
       {
         "name": "Tests",
@@ -349,9 +383,10 @@
           {
             "name": "testGetSpreadsheets",
             "type": "Boolean",
-            "description": "Tests the retrieval of spreadsheets to ensure the API client is functioning correctly."
+            "description": "Action to test the retrieval of spreadsheets to ensure the API client is functioning correctly."
           }
-        ]
+        ],
+        "description": "Collection of tests for the Google Sheets driver."
       }
     ]
   },
